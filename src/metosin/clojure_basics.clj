@@ -128,7 +128,7 @@ v1                     ; => [1 2]
 v1                     ; => [1 2]
 (nth v1 0)             ; => 1
 (nth v1 1)             ; => 2
-(nth v1 2)             ; throws IndexOutOfBoundsException
+; (nth v1 2)           ; throws IndexOutOfBoundsException
 
 ;; Note: Vecors grow naturally at the end (conj adds to the end) and that getting
 ;; values with nth is log32N (read 'fast').
@@ -137,7 +137,7 @@ v1                     ; => [1 2]
 
 (v1 0)                 ; => 1
 (v1 1)                 ; => 2
-(v1 2)                 ; throws IndexOutOfBoundsException
+; (v1 2)               ; throws IndexOutOfBoundsException
 
 ;;
 ;; Collections: List
@@ -399,24 +399,20 @@ v1                     ; => [1 2]
 (contains? (set (flatten (map :langs programmers))) :clojure)   ; => true
 (contains? (set (flatten (map :langs programmers))) :haskell)   ; => false
 
-(->> programmers
+#_(->> programmers
   (map :langs)
   (flatten)
   (set)
-  (contains?))
-
-;;
-;; Macros:
-;;
+  (contains? ))
 
 ; Example: ->>
-
-(->>)
 
 ; Threads the expr through the forms. Inserts x as the
 ; last item in the first form, making a list of it if it is not a
 ; list already. If there are more forms, inserts the first form as the
 ; last item in second form, etc.
+
+; require
 
 (even? 1)                                                 ; => false
 (even? 2)                                                 ; => true
@@ -447,4 +443,3 @@ v1                     ; => [1 2]
 
 (.substring "Hello, world" 7)    ; => "world"
 
-(java.net.)
