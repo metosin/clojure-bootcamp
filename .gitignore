@@ -1,0 +1,35 @@
+/target
+/lib
+/classes
+/checkouts
+/bin
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+
+#
+# Lein
+#
+
+.lein-deps-sum
+.lein-failures
+.lein-plugins
+.lein-repl-history
+
+#
+# Eclipse
+#
+
+.project
+.classpath
+.settings
+
+#
+# IntelliJ IDEA
+#
+
+*/*.iws
+*/.idea/workspace.xml
+*/.idea/tasks.xml
+
