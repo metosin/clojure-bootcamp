@@ -3,8 +3,9 @@
 ;;
 ;; Welcome to Metosin Clojure-basics training.
 ;;
-;; This is a clojure source file. The thing at the top is a namespace declaration. It
-;; says that this is namespace "metosin.clojure-basics".
+;; This is a clojure source file. The thing at the top is
+;; a namespace declaration. It says that this is namespace
+;; "metosin.clojure-basics".
 ;;
 
 ;; Let's start with some scalar values.
@@ -16,7 +17,8 @@ true
 #"hello, (\S+)"
 \F
 
-;; What are those, exactly. Let's use function 'type' so inspect them:
+;; What are those, exactly. Let's use function 'type' to
+;; inspect them:
 
 (type 1337)                      ; => java.lang.Long
 (type 3.14159)                   ; => java.lang.Double
@@ -57,7 +59,8 @@ true
 ; BigDecimal
 1234567890.1234567890M           ; => 12345678901234567890N
 
-;; What can we do with them? Let's call some functions and pass values as arguments.
+;; What can we do with them? Let's call some functions and
+;; pass values as arguments.
 
 (+ 1 2)                          ; => 3
 (* 3 4)                          ; => 12
@@ -93,8 +96,9 @@ true
 ;; Java inter-op:
 ;;
 
-;; dot special form makes a Java method invocation. First arg is the object, second is
-;; the method name, rest are arguments to method.
+;; dot special form makes a Java method invocation. First arg
+;; is the object, second is the method name, rest are arguments
+;; to method.
 
 (. "Hello, world" substring 7)           ; => "world"
 
@@ -142,7 +146,8 @@ true
 
 (vector 1 2 3)                           ; => [1 2 3]
 
-;; So Clojure vectors implement java.util.List. Let's try to call java.util.List.add():
+;; So Clojure vectors implement java.util.List. Let's try to
+;; call java.util.List.add():
 
 (try
   (.add [1 2 3] 4)
@@ -161,8 +166,9 @@ v1                     ; => [1 2]
 (nth v1 1)             ; => 2
 ; (nth v1 2)           ; throws IndexOutOfBoundsException
 
-;; Note: Vecors grow naturally at the end (conj adds to the end) and that getting
-;; values with nth is log32N (read 'fast').
+;; Note: Vecors grow naturally at the end (conj
+;; adds to the end) and that getting values with
+;; nth is log32N (read 'fast').
 
 ;; Vectors are also functions for their indices:
 
@@ -174,16 +180,19 @@ v1                     ; => [1 2]
 ;; Collections: List
 ;;
 
-;; Very similar to vectors. Lists are mostly used to invoke functions, like:
+;; Very similar to vectors. Lists are mostly used to invoke
+;; functions, like:
 
 (+ 1 2)                     ; => 3
 
-;; To stop clojure from evaluating list as a function call, use quote:
+;; To stop clojure from evaluating list as a function
+;; call, use quote:
 
 (quote (+ 1 2))             ; => (+ 1 2)
 
-;; The above evaluates to a list with three elements, first is a symbol +, second
-;; is number 1 and third is number 2.
+;; The above evaluates to a list with three elements,
+;; first is a symbol +, second is number 1 and third
+;; is number 2.
 
 ;; Shorthand for quote:
 
@@ -196,7 +205,8 @@ v1                     ; => [1 2]
 (conj [1 2] 3)              ; => [1 2 3]
 (conj '(1 2) 3)             ; => (3 1 2)
 
-;; cons (short from construct) creates a new cons cell, i.e. linked list node:
+;; cons (short from construct) creates a new cons cell,
+; i.e. linked list node:
 
 (cons 3 nil)                     ; => (3)
 (cons 2 (cons 3 nil))            ; => (2 3)
@@ -239,32 +249,33 @@ v1                     ; => [1 2]
 ;; Collections: Map
 ;;
 
-(type {"a" "b"})                           ; => clojure.lang.PersistentArrayMap
-(instance? java.util.Map {"a" "b"})        ; => true
+(type {"a" "b"})                     ; => clojure.lang.PersistentArrayMap
+(instance? java.util.Map {"a" "b"})  ; => true
 
 ;; Getting values by key:
 
-(get {"a" 1, "b" 2} "a")                     ; => 1
-(get {"a" 1, "b" 2} "b")                     ; => 2
-(get {"a" 1, "b" 2} "c")                     ; => nil
-(get {"a" 1, "b" 2} "c" "wut?")              ; => "wut?"
+(get {"a" 1, "b" 2} "a")                    ; => 1
+(get {"a" 1, "b" 2} "b")                    ; => 2
+(get {"a" 1, "b" 2} "c")                    ; => nil
+(get {"a" 1, "b" 2} "c" "wut?")             ; => "wut?"
 
 (contains? {"foo" "bar"} "foo")             ; => true
 (contains? {"foo" "bar"} "x")               ; => false
 
 (assoc {"a" 1} "b" 2)                       ; => {"a" 1, "b" 2}
-(dissoc {"a" 1, "b" 2} "b")                  ; => {"a" 1}
+(dissoc {"a" 1, "b" 2} "b")                 ; => {"a" 1}
 
 ;; Maps are also functions:
 
-({"a" 1, "b" 2} "a")                         ; => 1
-({"a" 1, "b" 2} "c")                         ; => nil
+({"a" 1, "b" 2} "a")                        ; => 1
+({"a" 1, "b" 2} "c")                        ; => nil
 
 ;; Programmaticaly:
 
 (hash-map "a" 1 "b" 2)                      ; => {"a" 1, "b" 2}
 
-;; Note that in Clojure (like in most Lisp's) the comma is just white space:
+;; Note that in Clojure (like in most Lisp's) the comma is
+;; just white space:
 
 (= {"a" 1 "b" 2}  {"a" 1, "b" 2})           ; => true
 (= {"a" 1 "b" 2}  {,,"a", 1 "b", ,, ,,, 2}) ; => true
@@ -281,10 +292,10 @@ v1                     ; => [1 2]
               "address"   {"street" "Hameenkatu 2"
                            "city"   "Tampesteri"}})
 
-(get company "name")                        ; => "metosin"
-(get company "address")                     ; => {"street" "Hameenkatu 2", "city"   "Tampesteri"}
-(get (get company "address") "street")      ; => "Hameenkatu 2"
-(get-in company ["address" "street"])       ; => "Hameenkatu 2"
+(get company "name")                   ; => "metosin"
+(get company "address")                ; => {"street" "Hameenkatu 2", "city"   "Tampesteri"}
+(get (get company "address") "street") ; => "Hameenkatu 2"
+(get-in company ["address" "street"])  ; => "Hameenkatu 2"
 
 (assoc-in company ["address" "zip"] "33100") 
 ; => {"name" "metosin",
@@ -319,9 +330,9 @@ v1                     ; => [1 2]
 ;; Keywords:
 ;;
 
-; Interned strings. Comparing two strings for equality requires traversing
-; the strings, but keywords are interned, so equality can be done by comparing
-; memory address.
+; Interned strings. Comparing two strings for equality requires
+; traversing the strings, but keywords are interned, so equality
+; can be done by comparing memory address.
 ;
 ; From clojure.lang.Keyword:
 ;
@@ -369,10 +380,12 @@ v1                     ; => [1 2]
 (greeter "world")
 ; prints: "Greetings, world"
 
-;; Last thing function evaluates is the retusn value. In above, last thing
-;; greeter evaluates is function call to println, so what ever println returns
-;; will be return value of greeter. Since println always returns nil, greeter
-;; returns nil. In Clojure lingo, greeter evaluates to nil.
+;; Last thing function evaluates is the retusn value. In
+;; above, last thing greeter evaluates is function call
+;; to println, so what ever println returns will be return
+;; value of greeter. Since println always returns nil,
+;; greeter returns nil. In Clojure lingo, greeter evaluates
+;; to nil.
 
 (greeter "world")                          ; => nil
 
@@ -403,7 +416,6 @@ v1                     ; => [1 2]
 ;;
 ;; Let's play with functions and collections:
 ;;
-
 
 ; Here's some data:
 
