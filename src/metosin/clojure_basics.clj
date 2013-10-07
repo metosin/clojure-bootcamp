@@ -10,15 +10,10 @@
 ;; Let's start with some scalar values.
 
 1337
-
 3.14159
-
 "Hello, clojure world!"
-
 true
-
 #"hello, (\S+)"
-
 \F
 
 ;; What are those, exactly. Let's use function 'type' so inspect them:
@@ -93,6 +88,42 @@ true
 
 (instance? java.lang.String "foo")     ; => true
 (instance? java.lang.String 42)        ; => false
+
+;;
+;; Java inter-op:
+;;
+
+;; dot special form makes a Java method invocation. First arg is the object, second is
+;; the method name, rest are arguments to method.
+
+(. "Hello, world" substring 7)           ; => "world"
+
+;; Same, but more commonly used:
+
+(.substring "Hello, world" 7)            ; => "world"
+
+;; new
+
+(new java.math.BigInteger "1234567890")  ; => 1234567890
+
+;; Same, but more commonly used:
+
+(java.math.BigInteger. "1234567890")     ; => 1234567890
+
+;;
+;; try/throw/catch/finally:
+;;
+
+(try
+  (throw (RuntimeException. "oh noes!"))
+  (catch Exception e
+    (println "Sorry:" (.getMessage e)))
+  (finally
+    (println "we are done")))
+
+; prints:
+;   Sorry: oh noes!
+;   we are done
 
 ;;
 ;; Collections: Vector
@@ -367,79 +398,109 @@ v1                     ; => [1 2]
 ;;
 
 
-(def programmers [{:name "Lisa"
-                   :langs [:clojure :java]
-                   :experience 8}
-                  {:name "Kevin"
-                   :langs [:javascript :perl :c#]
-                   :experience 6}
-                  {:name "Agatha"
-                   :langs [:clojure :prolog :c++]
-                   :experience 12}])
+; Here's some data:
 
-; Find names of programmers:
+(def programmers [{:name "Lisa"
+                   :experience {:clojure  2
+                                :java     7}}
+                  {:name "Kevin"
+                   :experience {:javascript  4
+                                :perl        3
+                                :c#          5}}
+                  {:name "Agatha"
+                   :experience {:clojure  3
+                                :prolog   3
+                                :java     5
+                                :c++      6}}])
+
+; Find names of all programmers:
 
 (defn name-of-programmer [programmer]
   (get programmer :name))
 
+(name-of-programmer (first programmers))                  ; => "Lisa"
+
+; map: apply given function to each elemenent:
+
 (map name-of-programmer programmers)                      ; => ("Lisa" "Kevin" "Agatha")
 
-; Since keywords are functions:
+; But keywords are functions:
 
+(:name (first programmers))                               ; => "Lisa"
 (map :name programmers)                                   ; => ("Lisa" "Kevin" "Agatha")
 
-; What languages we have
+;
+; How much experience our programmers have on specific language:
+;
 
-(map :langs programmers)                                  ; => ([:clojure :java] [:javascript :perl :c#] [:clojure :prolog :c++])
-(flatten (map :langs programmers))                        ; => (:clojure :java :javascript :perl :c# :clojure :prolog :c++)
-(set (flatten (map :langs programmers)))                  ; => #{:clojure :javascript :c++ :perl :c# :prolog :java}
+(defn find-experience [lang]
+  (map
+    (fn [programmer] {:name (:name programmer)
+                      :exp (get-in programmer [:experience lang] 0)})
+    programmers))
 
-; Check if some of our programmers knows given language:
+(find-experience :clojure)         ; => ({:name "Lisa", :exp 2} {:name "Kevin", :exp 0} {:name "Agatha", :exp 3})
+(find-experience :java)            ; => ({:name "Lisa", :exp 7} {:name "Kevin", :exp 0} {:name "Agatha", :exp 5})
 
-(contains? (set (flatten (map :langs programmers))) :clojure)   ; => true
-(contains? (set (flatten (map :langs programmers))) :haskell)   ; => false
+;
+; How much experience we have in total:
+;
 
-#_(->> programmers
-  (map :langs)
+; reduce:
+
+(reduce + 0 [1 2 3])                               ; => 6
+; -> same as: (+ (+ (+ 0 1) 2) 3)
+
+; With two arguments:
+
+(reduce + [1 2 3])                                 ; => 6
+; -> same as: (+ (+ 1 2) 3)
+
+(find-experience :clojure)                         ; => ({:name "Lisa", :exp 2} {:name "Kevin", :exp 0} {:name "Agatha", :exp 3})
+(map :exp (find-experience :clojure))              ; => (2 0 3)
+(reduce + (map :exp (find-experience :clojure)))   ; => 5
+
+(defn total-experience [lang]
+  (reduce + (map :exp (find-experience lang))))
+
+(total-experience :clojure)                        ; => 5
+(total-experience :perl)                           ; => 3
+
+; Total experience by language:
+
+(map :experience programmers)                      ; => ({:clojure 2, :java 7} {:javascript 4, :perl 3, :c# 5} {:clojure 3, :c++ 6, :prolog 3, :java 5})
+(map seq (map :experience programmers))            ; => (([:clojure 2] [:java 7]) ([:javascript 4] [:perl 3] [:c# 5]) ([:clojure 3] [:c++ 6] [:prolog 3] [:java 5]))
+(flatten (map seq (map :experience programmers)))  ; => (:clojure 2 :java 7 :javascript 4 :perl 3 :c# 5 :clojure 3 :c++ 6 :prolog 3 :java 5)
+(partition 2 (flatten (map seq (map :experience programmers))))  ; => ((:clojure 2) (:java 7) (:javascript 4) (:perl 3) (:c# 5) (:clojure 3) (:c++ 6) (:prolog 3) (:java 5))
+
+(defn add-exp [acc element]
+  (let [lang (first element)
+        exp  (second element)]
+    (assoc acc lang (+ (get acc lang 0) exp))))
+
+(reduce add-exp {} (partition 2 (flatten (map seq (map :experience programmers)))))
+; => {:prolog 3, :c++ 6, :c# 5, :perl 3, :javascript 4, :java 12, :clojure 5}
+
+; pro tip: there's a function for it
+(apply merge-with + (map :experience programmers))
+; => {:clojure 5, :javascript 4, :c++ 6, :perl 3, :c# 5, :prolog 3, :java 12}
+
+; common in clojure:
+(partition 2 (flatten (map seq (map :experience programmers))))
+
+; Joda says: hard to read is
+; Time for macro: ->> converts Joda talk to human talk
+
+(->> programmers
+  (map :experience)
+  (map seq)
   (flatten)
-  (set)
-  (contains? ))
+  (partition 2))
 
-; Example: ->>
+; -> same but chains on second position:
 
-; Threads the expr through the forms. Inserts x as the
-; last item in the first form, making a list of it if it is not a
-; list already. If there are more forms, inserts the first form as the
-; last item in second form, etc.
-
-; require
-
-(even? 1)                                                 ; => false
-(even? 2)                                                 ; => true
-
-(defn triple-me [x] (* 3 x))
-(map triple-me [1 2 3 4 5 6])                             ; => (2 4 6 8 10 12)
-
-(filter even? (map triple-me [1 2 3 4 5 6]))              ; => (6 12 18)
-
-(defn half [x] (/ x 2))
-
-(map half (filter even? (map triple-me [1 2 3 4 5 6])))   ; => (3 6 9)
-
-;;
-;; Macros:
-;;
-
-;;
-;; Java inter-op:
-;;
-
-;; dot special form makes a Java method invocation. First arg is the object, second is
-;; the method name, rest are arguments to method.
-
-(. "Hello, world" substring 7)   ; => "world"
-
-;; Same, but more commonly used:
-
-(.substring "Hello, world" 7)    ; => "world"
+(-> "HELLO WORLD"
+  (.toLowerCase)
+  (.substring 6)
+  (.replaceAll "w" "W"))    ; => "World"
 
