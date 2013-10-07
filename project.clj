@@ -1,5 +1,5 @@
-(defproject metosin/clojure-basics "0.1.0-SNAPSHOT"
-  :description "Metosin training: Clojure-basics"
+(defproject metosin/clojure-bootcamp "0.1.0-SNAPSHOT"
+  :description "Metosin training: Clojure-bootcamp"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]]
