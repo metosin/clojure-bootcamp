@@ -386,6 +386,13 @@ v1                     ; => [1 2]
 ;; Lexical bindings: let
 ;;
 
+(let [a 22
+      b (* a 2)
+      c (- b 2)]
+  c)
+
+=> 42
+
 (defn greeter [your-name]
   (let [message (str "Greetings, " your-name)]
     (println message)
@@ -505,3 +512,86 @@ v1                     ; => [1 2]
 (->> programmers (map :experience) (map seq) (flatten) (partition 2))
 ; => ((:clojure 2) (:java 7) (:javascript 4) (:perl 3) (:c# 5) (:clojure 3) (:c++ 6) (:prolog 3) (:java 5))
 
+;;
+;; virtues and perils of being lazy
+;;
+
+(def r (map (fn [x] (println "x=" x) (* 2 x)) [0 1 2 3 4 5 6]))
+; prints nothing?
+
+(nth r 0)
+; prints:
+; x= 0
+; x= 1
+; x= 2
+; x= 3
+; x= 4
+; x= 5
+; x= 6
+; => 0
+
+(nth r 1)
+; => 2
+
+; When you need to execute something for side-effects over a seq, use:
+;  dorun
+;  doall
+;  doseq
+
+; In general, when you see 'do', you know some side-effects gonna happen:
+
+(doseq [n (range 7)]
+  (println "n=" n))
+
+; prints:
+; n= 0
+; n= 1
+; n= 2
+; n= 3
+; n= 4
+; n= 5
+; n= 6
+
+;;
+;; Control structures:
+;;
+
+(if true (println "yes") (println "no"))
+; prints: yes
+; => nil
+
+(println (if true "yes" "no"))
+; prints: yes
+; => nil
+
+;;
+;; truthy:
+;;
+
+(println (if true     "yes" "no"))   ; prints "yes"
+(println (if 42       "yes" "no"))   ; prints "yes"
+(println (if :foo     "yes" "no"))   ; prints "yes"
+(println (if []       "yes" "no"))   ; prints "yes"
+(println (if println  "yes" "no"))   ; prints "yes"
+
+; in fact, everything is truthy, except false and nil:
+
+(println (if false     "yes" "no"))   ; prints "no"
+(println (if nil       "yes" "no"))   ; prints "no"
+
+; when
+
+(when true
+  (print "this ")
+  (print "and ")
+  (println "that"))
+
+; prints: this and that
+
+(cond
+  false      (println "not this")
+  (even? 1)  (println "or this")
+  (odd? 1)   (println "this is it")
+  true       (println "gone already"))
+
+; prints: this is it
