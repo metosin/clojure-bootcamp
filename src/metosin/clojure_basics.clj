@@ -489,18 +489,19 @@ v1                     ; => [1 2]
 (partition 2 (flatten (map seq (map :experience programmers))))
 
 ; Joda says: hard to read is
-; Time for macro: ->> converts Joda talk to human talk
+; Time for macro: -> and ->> converts Joda talk to human talk
 
-(->> programmers
-  (map :experience)
-  (map seq)
-  (flatten)
-  (partition 2))
+; -> chains on second position:
 
-; -> same but chains on second position:
+(.replaceAll (.substring (.toLowerCase "HELLO WORLD") 6) "w" "W")         ; => "World"
 
-(-> "HELLO WORLD"
-  (.toLowerCase)
-  (.substring 6)
-  (.replaceAll "w" "W"))    ; => "World"
+(-> "HELLO WORLD" (.toLowerCase) (.substring 6) (.replaceAll "w" "W"))    ; => "World"
+
+; ->> chains on last position:
+
+(partition 2 (flatten (map seq (map :experience programmers))))
+; => ((:clojure 2) (:java 7) (:javascript 4) (:perl 3) (:c# 5) (:clojure 3) (:c++ 6) (:prolog 3) (:java 5))
+
+(->> programmers (map :experience) (map seq) (flatten) (partition 2))
+; => ((:clojure 2) (:java 7) (:javascript 4) (:perl 3) (:c# 5) (:clojure 3) (:c++ 6) (:prolog 3) (:java 5))
 
