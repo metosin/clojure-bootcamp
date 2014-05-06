@@ -1,21 +1,17 @@
-(ns metosin.clojure-basics)
+(ns metosin.bootcamp.intro)
 
 ;;
-;; Welcome to Metosin Clojure-basics training.
+;; Welcome to Metosin Clojure-bootcamp training.
 ;;
-;; This is a clojure source file. The thing at the top is
-;; a namespace declaration. It says that this is namespace
-;; "metosin.clojure-basics".
+;; This is a clojure source file. The thing at the top is a namespace declaration. It
+;; says that this is namespace "metosin.bootcamp.intro".
 ;;
 
 ;; Let's start with some scalar values.
 
-1337
-3.14159
-"Hello, clojure world!"
-true
-#"hello, (\S+)"
-\F
+1337                            ; => 1337
+3.14159                         ; => 3.14159
+"Hello, clojure world!"         ; => "Hello, clojure world!"
 
 ;; What are those, exactly. Let's use function 'type' to
 ;; inspect them:
@@ -27,45 +23,14 @@ true
 (type #"hello, (\S+)")           ; => java.util.regex.Pattern
 (type \F)                        ; => java.lang.Character
 
-;; Ok, so those look familiar :)
-
-(string? "foo")                  ; => true
-(number? 1337)                   ; => true
-(char? \newline)                 ; => true
-
-;; Ratios:
-
-(/ 2 4)                          ; 1/2
-(type (/ 2 4))                   ; => clojure.lang.Ratio
-
-; Ratios are not subject to roundoff errors:
-
-(* (/ 1 7) 7)                    ; => 1N
-(* (double (/ 1 7)) 7)           ; => 1.0000000000000004
-
-;; Some less common number formats:
-
-; hex
-0xFF                             ; => 255
-0xff                             ; => 255
-; oct
-052                              ; => 42
-; Base 2
-2r1101                           ; => 13
-; Base 36
-36rWUT                           ; => 42581
-; BigInt
-12345678901234567890N            ; => 12345678901234567890N
-; BigDecimal
-1234567890.1234567890M           ; => 12345678901234567890N
-
-;; What can we do with them? Let's call some functions and
-;; pass values as arguments.
+;;
+;; Calling functions:
+;;
 
 (+ 1 2)                          ; => 3
 (* 3 4)                          ; => 12
 
-;; Function + can take any nmber of arguments:
+;; Some functions can take variable number of arguments:
 
 (+ 1 2 3)                        ; => 6
 
@@ -139,8 +104,6 @@ true
 (instance? java.lang.Iterable [1 2 3])   ; => true
 (vector? [1 2 3])                        ; => true
 (vector? [])                             ; => true
-(count [1 2 3])                          ; => 3
-(count [])                               ; => 0
 
 ;; Vectors can be created programmatically too:
 
