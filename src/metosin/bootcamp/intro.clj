@@ -367,7 +367,7 @@ v1                     ; => [1 2]
       c (- b 2)]
   c)
 
-=> 42
+;=> 42
 
 (defn greeter [your-name]
   (let [message (str "Greetings, " your-name)]
