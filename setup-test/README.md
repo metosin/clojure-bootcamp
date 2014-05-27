@@ -34,7 +34,7 @@ $ lein deps
 Leiningen shows how it downloads half of the internet (the better half) to your HD.
 
 ```bash
-$ lein ring server
+$ lein do cljsbuild once, ring server
 ```
 
 This will compile the application, it might take a long time (like 30 sec or so). Don't worry, the normal development cycle is usually less than 1 sec. Once the app is running it should open your browser and show you a greeting message. If that's what you get you, and your machine, are ready for the training. If something did not work as intended, contact us for help.
