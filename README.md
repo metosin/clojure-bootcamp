@@ -4,7 +4,7 @@ This repository has training material for **Metosin Clojure Bootcamp** training.
 
 ## Getting started
 
-It's highly recommended to check your environment before the training. Please clone this repo, go to ```setup-test``` folder, and follow the instructions in the ```README.md``` in that folder.
+It's highly recommended to setup your environment before the training. Please check https://github.com/metosin/clojure-bootcamp-setup before the training.
 
 ## License
 
