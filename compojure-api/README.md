@@ -1,6 +1,6 @@
 # compojure-api
 
-FIXME
+Metosin Clojure-bootcamp training: Intruduction to Compojure-api
 
 ## Usage
 
@@ -19,7 +19,7 @@ java -jar target/server.jar
 
 `lein ring uberwar`
 
-### Publishing on heroku
+### Publish at Heroku
 
 ```
 # Add heroku git remote
@@ -30,4 +30,7 @@ git subtree push --prefix compojure-api heroku-capi master
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright &copy; 2014 Metosin Oy
+
+Distributed under the Eclipse Public License either version 1.0 or (at
+your option) any later version.
