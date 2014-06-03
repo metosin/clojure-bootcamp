@@ -14,8 +14,8 @@
                  [cljs-ajax "0.2.4" :scope "provided"]]
   :source-paths ["src/clj" "src/cljs"]
   :profiles {:dev {:dependencies [[midje "1.6.3"]]
-                   :plugins [[lein-cljsbuild "1.0.3"]]
-                   :cljsbuild {:builds {:client {:notify-command ["growlnotify" "-n" "cljsbuild" "-m"]}}}}
+                   ; :cljsbuild {:builds {:client {:notify-command ["growlnotify" "-n" "cljsbuild" "-m"]}}}
+                   :plugins [[lein-cljsbuild "1.0.3"]]}
              :uberjar {:source-paths ["src/clj" "src/main"]
                        :main cljs-intro.main
                        :aot [cljs-intro.main]
