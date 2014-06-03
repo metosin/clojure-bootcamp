@@ -19,6 +19,7 @@
              :uberjar {:source-paths ["src/clj" "src/main"]
                        :main cljs-intro.main
                        :aot [cljs-intro.main]
+                       :hooks [leiningen.cljsbuild]
                        :cljsbuild {:builds {:client {:compiler {:optimizations :advanced
                                                                 :elide-asserts true
                                                                 :pretty-print false}}}}}}
