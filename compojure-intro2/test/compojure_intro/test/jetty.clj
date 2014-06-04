@@ -1,6 +1,7 @@
 (ns compojure-intro.test.jetty
   (:require [ring.adapter.jetty :as jetty]
             [clj-http.client :as http]
+            [midje.sweet :refer :all]
             [compojure-intro.handler :as handler]))
 
 (let [server (atom nil)
@@ -14,6 +15,11 @@
                       :method method
                       :as :json})))
 
+  (defn post-json [uri body]
+    (http :post uri
+          {:content-type :json
+           :form-params body}))
+
   (defn start-jetty []
     (when-not @server
       (swap! server
@@ -25,3 +31,9 @@
       (.stop @server)
       (swap! server (constantly nil)))))
 
+(defmacro jetty-facts [name & body]
+  `(facts ~name
+          (background
+            (before :contents (start-jetty))
+            (after  :contents (stop-jetty)))
+          ~@body))
