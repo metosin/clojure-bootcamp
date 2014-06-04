@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -jar target/intro.jar $PORT
+web: java $JVM_OPTS -jar target/cljs-intro.jar $PORT
