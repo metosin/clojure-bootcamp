@@ -1,6 +1,7 @@
 (ns compojure-api.main
   (:require [ring.adapter.jetty :refer [run-jetty]]
-            [compojure-api.handler :refer :all]))
+            [compojure-api.handler :refer :all])
+  (:gen-class))
 
 (defn -main
   "Simple Jetty main for Heroku"
