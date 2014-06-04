@@ -10,9 +10,10 @@
     (after  :contents (stop-jetty)))
 
   (fact "echo echos json"
-    (let [{:keys [status body]} (http :get "/echo" {:beer "olvi"
-                                                    :tags [:oldscool]})]
+    (let [beer {:beer "olvi" :tags ["oldschool"]}
+          {:keys [status body]} (http :post "/echo"
+                                      {:content-type :json
+                                       :form-params beer})]
       status => 200
-      body => {:a 1 :b [1 2 3]}
-      ))
-  )
+      body => beer
+      )))
