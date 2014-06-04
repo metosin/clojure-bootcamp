@@ -9,8 +9,6 @@
   :main compojure-api.main
   :uberjar-name "server.jar"
   :min-lein-version "2.0.0"
-  :profiles {:uberjar {:resource-paths ["swagger-ui"]
-                       :main compojure-api.main
-                       :aot [compojure-api.main]}
+  :profiles {:uberjar {:resource-paths ["swagger-ui"]}
              :dev {:dependencies [[javax.servlet/servlet-api "2.5"]]
                    :plugins [[lein-ring "0.8.10"]]}})
