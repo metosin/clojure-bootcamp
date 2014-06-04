@@ -4,10 +4,12 @@
             [ring-intro.core :refer :all]))
 
 (deftest test-app
-  (testing "main route"
-    (let [response (handler (request :get "/hello"))]
+  (testing "ping route"
+    (let [response (handler (request :get "/ping"))]
       (is (= (:status response) 200))
       (is (= (:body response) "Hello Programmer"))))
+
+  ;; write a pong-test
 
   (testing "not-found route"
     (let [response (handler (request :get "/invalid"))]

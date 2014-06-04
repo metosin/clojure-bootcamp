@@ -34,8 +34,7 @@
 ;; Sample usage
 ;;
 
-(comment
-
+(do
   (add! {:name "kukko" :tags [:green :good]})
   (add! {:name "sandels" :tags [:yellow]}))
 
