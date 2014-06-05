@@ -9,6 +9,7 @@
 (defn resolve-handler []
   ;; Require is done inside this function to
   ;; prevent eager compilation during AOT compilation
+  ;; resolve returns a var so if you redefine it, server will see the changes
   (require 'workflow.handler)
   (resolve 'workflow.handler/app))
 

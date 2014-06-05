@@ -10,5 +10,4 @@
   :profiles {:uberjar {:resource-paths ["swagger-ui"]}
              :dev {:source-paths ["dev-src"]
                    :dependencies [[javax.servlet/servlet-api "2.5"]
-                                  [org.clojure/tools.namespace "0.2.4"]
-                                  [midje "1.6.3"]]}})
+                                  [org.clojure/tools.namespace "0.2.4"]]}})
