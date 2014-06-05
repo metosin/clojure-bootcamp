@@ -1,17 +1,15 @@
-(defproject cljs-intro "0.1.0-SNAPSHOT"
+(defproject cljs-template "0.1.0-SNAPSHOT"
   :description "Metosin Clojure Bootcamp - CLJS intro"
   :license {:name "Eclipse Public License" :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-2227" :scope "provided"]
-                 [org.clojure/core.async "0.1.303.0-886421-alpha"]
                  [http-kit "2.1.18"]
                  [ring/ring-core "1.3.0"]
                  [ring/ring-devel "1.3.0"]
                  [compojure "1.1.8"]
                  [hiccup "1.0.5"]
                  [metosin/ring-http-response "0.4.0"]
-                 [ring-middleware-format "0.3.2" :exclusions [ring]]
-                 [javax.servlet/servlet-api "2.5"]
+                 [ring-middleware-format "0.3.2"]
                  [prismatic/dommy "0.1.2" :scope "provided"]
                  [cljs-ajax "0.2.4" :scope "provided"]]
   :source-paths ["src/clj" "src/cljs"]

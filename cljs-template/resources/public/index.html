@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cljs-intro</title>
+    <link rel="stylesheet" href="cljs-intro.css" />
+  </head>
+  <body>
+    <h1>cljs intro</h1>
+    <div>
+	    <form class="question-form">
+	      <label for="question">Enter your question:</label>
+	      <input type="text"
+	             name="question"
+	             id="question"
+	             placeholder="Question?"
+	             autofocus="autofocus"></input>
+	      <button type="submit">Ask</button>
+	    </form>
+    </div>
+    <div class="response">
+      <span>Server response:</span>
+      <img class="wait hidden" src="loading.gif"></img>
+      <span class="resp"></span>
+    </div>    
+  </body>
+  <script src="intro.js" type="text/javascript"></script>
+</html>
