@@ -107,14 +107,14 @@
 (set-validator! acc2 (fn [balance]
                        (>= balance 0)))
 
-(defn cell [conversion-f]
+(defn cell [acc conversion-f]
   (reify clojure.lang.IRef
     (deref [_]
-      (conversion-f))))
+      (conversion-f acc))))
 
 (def acc1-c (cell
-              (fn []
-                (* (deref acc1) 42))))
+              (fn [acc]
+                (* (deref acc) 42))))
 
 (deref acc1-c)
 @acc1-c
