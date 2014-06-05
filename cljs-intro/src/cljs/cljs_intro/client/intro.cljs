@@ -6,14 +6,16 @@
 
 (enable-console-print!)
 
+(defn question-reply [resp]
+  (dommy/add-class! (sel1 ".wait") :hidden)
+  (dommy/set-text! (sel1 ".resp") (:message resp)))
+
 (defn on-submit [e]
   (u/prevent-default e)
   (dommy/remove-class! (sel1 ".wait") :hidden)
   (dommy/set-text! (sel1 ".resp") "")
   (POST "/question" {:params {:question (-> ".question-form input" sel1 dommy/value)}
-                     :handler (fn [resp]
-                                (dommy/add-class! (sel1 ".wait") :hidden)
-                                (dommy/set-text! (sel1 ".resp") (:message resp)))}))
+                     :handler question-reply}))
 
 (defn ready []
   (dommy/listen! (sel1 ".question-form button") :click on-submit))
