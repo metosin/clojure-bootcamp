@@ -2,7 +2,7 @@
   (:require [schema.core :as s]
             [schema.coerce :as sc]))
 
-(defn json-coerce [schema value]
+#_(defn json-coerce [schema value]
   ((sc/coercer schema sc/json-coercion-matcher) value))
 
 ; (s/maybe)
