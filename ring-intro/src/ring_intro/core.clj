@@ -2,7 +2,9 @@
   (:require [ring.adapter.jetty :as jetty]))
 
 (defn handler [request]
-  (throw (UnsupportedOperationException. "fail.")))
+  {:status 200
+   :headers {"Content-Type" "text/html"}
+   :body "dunno what to respond"})
 
 (defn start []
   (jetty/run-jetty (var handler) {:port 3000 :join? false}))

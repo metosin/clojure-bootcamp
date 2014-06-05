@@ -13,9 +13,10 @@
 
 (defn add! [x]
   {:pre [(map? x)]}
-  (let [id (swap! ids inc)]
-    (swap! data assoc id (assoc x :id id))
-    (@data id)))
+  (let [id (swap! ids inc)
+        x (assoc x :id id)]
+    (swap! data assoc id x)
+    x))
 
 (defn by-id [id]
   (@data id))
@@ -23,8 +24,14 @@
 (defn all []
   (vals @data))
 
-; delete!
-; update!
+(defn delete! [id]
+  (swap! data dissoc :id id)
+  nil)
+
+(defn update! [{:keys [id] :as x}]
+  {:pre [id]}
+  (swap! data assoc id x)
+  x)
 
 (defn delete-all! []
   (reset! data {})
@@ -34,11 +41,7 @@
 ;; Sample usage
 ;;
 
-(comment
-
+(do
   (add! {:name "kukko" :tags [:green :good]})
-  (add! {:name "sandels" :tags [:yellow]}))
-
-(all)
-
-(delete-all!)
+  (add! {:name "sandels" :tags [:yellow]})
+  (delete-all!))
