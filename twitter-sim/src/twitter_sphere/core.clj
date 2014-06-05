@@ -1,6 +1,3 @@
-(ns twitter-sphere.core)
+(ns twitter-sphere.core
+  (:require [clojure.core.async :as async :refer [chan go >!! >! <!! <! alt! alts!]]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
