@@ -10,6 +10,7 @@
                  [hiccup "1.0.5"]
                  [metosin/ring-http-response "0.4.0"]
                  [ring-middleware-format "0.3.2" :exclusions [ring]]
+                 [javax.servlet/servlet-api "2.5"]
                  [prismatic/dommy "0.1.2" :scope "provided"]
                  [cljs-ajax "0.2.4" :scope "provided"]]
   :source-paths ["src/clj" "src/cljs"]
