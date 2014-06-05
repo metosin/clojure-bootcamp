@@ -14,8 +14,8 @@
   (defn all []
     (mc/find-maps db coll))
 
-  (defn insert! [body]
-    (mc/insert-and-return db coll (assoc body :_id (create-id))))
+  (defn insert! [beer]
+    (mc/insert-and-return db coll (assoc beer :_id (create-id))))
 
   (defn get-by-name [name]
     (mc/find-one-as-map db coll {:name name}))
