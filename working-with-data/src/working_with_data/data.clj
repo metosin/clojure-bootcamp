@@ -1,6 +1,6 @@
 (ns working-with-data.data
   (:require [clojure.java.io :as io])
-  (:import [org.apache.poi.ss.usermodel Sheet Row Cell]
+  (:import [org.apache.poi.ss.usermodel Row Cell]
            [org.apache.poi.xssf.usermodel XSSFWorkbook]))
 
 ;;
