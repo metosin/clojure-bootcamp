@@ -1,17 +1,21 @@
 (ns compojure-intro.db
   (:require [monger.core :as m]
             [monger.json]
-            [monger.collection :as mc]))
+            [monger.collection :as mc])
+  (:import [org.bson.types ObjectId]))
 
 (let [conn (m/connect)
       db   (m/get-db conn "clojure-bootcamp")
       coll :beers]
 
+  (defn create-id []
+    (str (ObjectId.)))
+
   (defn all []
     (mc/find-maps db coll))
 
   (defn insert! [body]
-    (mc/insert-and-return db coll body))
+    (mc/insert-and-return db coll (assoc body :_id (create-id))))
 
   (defn get-by-name [name]
     (mc/find-one-as-map db coll {:name name}))
