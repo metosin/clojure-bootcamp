@@ -1,6 +1,6 @@
 (ns metosin.dataset.pizzas)
 
-(def pizzaz [{:name "Alla Pollo"
+(def pizzas [{:name "Alla Pollo"
               :price    8.30
               :toppings {:onion 2
                          :ham   3}}
